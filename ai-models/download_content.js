@@ -2,6 +2,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import promptSync from 'prompt-sync';
 import { dirname } from 'path';
+import Progress from 'node-fetch-progress';
 const prompt = promptSync();
 
 
@@ -36,8 +37,15 @@ const createDir = (fileName) => {
 
 const downloadContent = async (fileDetails, fileDestination) => {
     const response = await fetch(fileDetails.url);
+    const progress = new Progress(response, {throttle: 100})
+    progress.on('progress', (p) => {
+        console.log(
+            "\x1b[32m" + p.totalh + "\x1b[0m",
+            "\x1b[33m" + p.doneh + "\x1b[0m",
+            "\x1b[34m" + p.etah + "\x1b[0m",
+        )
+      })
     const buffer = await response.arrayBuffer();
-    console.log(fileDestination);
     const filename = fileDestination + fileDetails.fileName + fileDetails.fileType;
     fs.writeFileSync(filename, Buffer.from(buffer));
 }
@@ -45,4 +53,3 @@ const downloadContent = async (fileDetails, fileDestination) => {
 const fileDetails = getDetails();
 const fileDestination = createDir(fileDetails.fileName);
 downloadContent(fileDetails, fileDestination);
-
