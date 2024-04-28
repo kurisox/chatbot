@@ -24,4 +24,12 @@ hs_err_pid*
 replay_pid*
 
 #custom
+#ignore the environment variables
 .env
+
+#ignores the node_modules
+node_modules
+
+#ignores the downloaded content
+ai-models/*
+!ai-models/download_content.js
