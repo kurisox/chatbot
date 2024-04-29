@@ -33,3 +33,4 @@ node_modules
 #ignores the downloaded content
 ai-models/*
 !ai-models/download_content.js
+!ai-models/utils
