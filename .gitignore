@@ -34,3 +34,4 @@ node_modules
 ai-models/*
 !ai-models/download_content.js
 !ai-models/utils
+!ai-models/package.json
