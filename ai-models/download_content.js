@@ -1,8 +1,8 @@
-import fs from 'fs';
-import fetch from 'node-fetch';
 import promptSync from 'prompt-sync';
 import { dirname } from 'path';
-import Progress from 'node-fetch-progress';
+import axios from 'axios';
+import ProgressBar from './utils/ProgressBar.js';
+import fs from 'fs';
 const prompt = promptSync();
 
 
@@ -14,7 +14,7 @@ const getDetails = () => {
     if (fileType.indexOf('.')) {
         fileType = "." + fileType;
     }
-    return {fileName, fileType, url};
+    return { fileName, fileType, url };
 }
 
 // create a directory for the file if it's not exists
@@ -35,21 +35,27 @@ const createDir = (fileName) => {
     return dirPath + "/";
 }
 
-const downloadContent = async (fileDetails, fileDestination) => {
-    const response = await fetch(fileDetails.url);
-    const progress = new Progress(response, {throttle: 100})
-    progress.on('progress', (p) => {
-        console.log(
-            "\x1b[32m" + p.totalh + "\x1b[0m",
-            "\x1b[33m" + p.doneh + "\x1b[0m",
-            "\x1b[34m" + p.etah + "\x1b[0m",
-        )
-      })
-    const buffer = await response.arrayBuffer();
-    const filename = fileDestination + fileDetails.fileName + fileDetails.fileType;
-    fs.writeFileSync(filename, Buffer.from(buffer));
+async function downloadContent(fileDetails, fileDestination) {
+    const response = await axios({
+        method: 'get',
+        url: fileDetails.url,
+        responseType: 'stream',
+        maxRedirects: 5,
+    });
+    const progress = new ProgressBar(response);
+    const writer = fs.createWriteStream(fileDestination + fileDetails.fileName + fileDetails.fileType);
+    response.data.pipe(writer);
+    response.data.on('data', (data) => {
+        progress.printProgress(data.length);
+    })
+    response.data.on('end', () => {
+        progress.printResult(fileDetails);
+    })
 }
 
 const fileDetails = getDetails();
 const fileDestination = createDir(fileDetails.fileName);
 downloadContent(fileDetails, fileDestination);
+
+//https://img.fotocommunity.com/beispielbild-542e2ac4-6fa2-4d8d-9180-c40a1ad52ee2.jpg?width=1000
+//https://huggingface.co/TheBloke/Llama-2-13B-GGUF/resolve/main/llama-2-13b.Q5_K_M.gguf?download=true
