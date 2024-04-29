@@ -35,6 +35,7 @@ const createDir = (fileName) => {
     return dirPath + "/";
 }
 
+//gets the details with axios and downloads the file
 async function downloadContent(fileDetails, fileDestination) {
     const response = await axios({
         method: 'get',
@@ -57,5 +58,3 @@ const fileDetails = getDetails();
 const fileDestination = createDir(fileDetails.fileName);
 downloadContent(fileDetails, fileDestination);
 
-//https://img.fotocommunity.com/beispielbild-542e2ac4-6fa2-4d8d-9180-c40a1ad52ee2.jpg?width=1000
-//https://huggingface.co/TheBloke/Llama-2-13B-GGUF/resolve/main/llama-2-13b.Q5_K_M.gguf?download=true
