@@ -13,10 +13,15 @@ public class ChatCompletion {
     private static ChatCompletion instance;
     private JSONArray context;
 
-    private ChatCompletion() throws JSONException {
+    private ChatCompletion(){
         this.context = new JSONArray();
         JSONObject model = new JSONObject();
-        model.put("model", "gpt-3.5-turbo");
+        try {
+          model.put("model", "gpt-3.5-turbo");
+        } catch (JSONException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         JSONArray messages = new JSONArray();
         messages.put(Message.createMessage("system", "You are a helpful assistant."));
         this.context.put(model);
@@ -30,8 +35,13 @@ public class ChatCompletion {
         return instance;
     }
 
-    public void addMessage(String role, String content) throws JSONException {
+    public void addMessage(String role, String content) {
         JSONObject message = Message.createMessage(role, content);
-        ChatCompletion.getInstance().getContext().getJSONArray(1).put(message);
+        try {
+          ChatCompletion.getInstance().getContext().getJSONArray(1).put(message);
+        } catch (JSONException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
     }
 }
