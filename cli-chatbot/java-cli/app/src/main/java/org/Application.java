@@ -1,17 +1,11 @@
 package org;
 
-import java.util.Scanner;
-
-import org.aiconnection.AIConnector;
+import org.chatcompletion.ChatCompletion;
 
 public class Application {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        ChatCompletion chatCompletion = new ChatCompletion();
+        chatCompletion.askAi("Hello!");
 
-        System.out.print("Enter your question: ");
-        String question = scanner.nextLine();
-        scanner.close();
-
-        AIConnector.getInstance().askAi(question);
     }
 }

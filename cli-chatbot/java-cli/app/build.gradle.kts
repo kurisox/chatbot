@@ -34,6 +34,11 @@ dependencies {
     
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.2")
+
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+
 }   
 
 // Apply a specific Java toolchain to ease working on different environments.
