@@ -1,5 +1,8 @@
 package org.chatcompletion;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.Getter;
 
 /**
@@ -7,9 +10,27 @@ import lombok.Getter;
  */
 @Getter
 public class ChatCompletion {
-  private String context;
+  private AIContext AIcontext;
 
-  private ChatCompletion() {
-    this.context = "{\"model\":\"gpt-3.5-turbo\",\"messages\":[{\"role\":\"system\",\"content\":\"You are a helpful assistant.\"}";
+  public ChatCompletion() {
+    this.AIcontext = new AIContext();
+  }
+
+  public void askAi(String content) {
+    this.AIcontext.addMessage(new Message("user", content));
+  }
+
+  public void aiAnswer(String content) {
+    this.AIcontext.addMessage(new Message("system", content));
+  }
+
+  public String toJson() {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.writeValueAsString(this.AIcontext);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }
