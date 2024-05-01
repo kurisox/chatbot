@@ -29,6 +29,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly("org.projectlombok:lombok:1.18.32")
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    implementation("com.fasterxml.jackson.core:jackson-core:2.16.1")
 }   
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -41,4 +43,8 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "org.Application"
+}
+
+tasks.getByName("run", JavaExec::class) {
+ standardInput = System.`in`
 }
