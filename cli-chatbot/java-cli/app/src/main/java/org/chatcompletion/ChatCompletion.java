@@ -1,5 +1,6 @@
 package org.chatcompletion;
 
+import org.ResponseEntitity.Message;
 import org.aiconnection.AIConnector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,15 +19,15 @@ public class ChatCompletion {
     this.AIcontext = new AIContext();
   }
 
-  public void askAi(String content) {
+  public String askAi(String content) {
     this.AIcontext.addMessage(new Message("user", content));
     String request = toJson();
-    System.out.println(request);
     String response = AIConnector.getInstance().callAPI(request);
-    System.out.println(response);
+    this.aiAnswer(response);
+    return response;
   }
 
-  public void aiAnswer(String content) {
+  private void aiAnswer(String content) {
     this.AIcontext.addMessage(new Message("system", content));
   }
 
