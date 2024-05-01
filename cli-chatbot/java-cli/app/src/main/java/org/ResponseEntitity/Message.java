@@ -1,4 +1,4 @@
-package org.chatcompletion;
+package org.ResponseEntitity;
 
 import java.util.Objects;
 
