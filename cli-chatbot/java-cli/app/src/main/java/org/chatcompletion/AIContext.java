@@ -3,6 +3,8 @@ package org.chatcompletion;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ResponseEntitity.Message;
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Getter;

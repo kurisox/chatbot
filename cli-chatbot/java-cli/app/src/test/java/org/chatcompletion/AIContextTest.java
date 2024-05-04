@@ -3,6 +3,7 @@ package org.chatcompletion;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import org.ResponseEntitity.Message;
 import org.junit.Before;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,15 +1,26 @@
-package org.chatcompletion;
+package org.ResponseEntitity;
 
 import java.util.Objects;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Getter
+@JsonPropertyOrder({ "content", "role"})
 public class Message{
+    @JsonProperty("role")
     private String role;
+    @JsonProperty("content")
     private String content;
+
+    public Message(String role, String content) {
+        this.role = role;
+        this.content = content;
+    }
 
     @Override
     public boolean equals(Object obj) {

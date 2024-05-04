@@ -2,12 +2,18 @@ package org.aiconnection;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import org.ResponseEntitity.ResponseEntitity;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class AIConnector {
     private static AIConnector instance;
@@ -16,8 +22,10 @@ public class AIConnector {
     private final String json = "application/json";
     private final int timeout = 1200;
     private final OkHttpClient httpClient;
+    private ObjectMapper objectMapper;
 
     private AIConnector() {
+        this.objectMapper = new ObjectMapper();
         this.httpClient = new OkHttpClient.Builder()
                 .readTimeout(this.timeout, TimeUnit.SECONDS)
                 .build();
@@ -38,16 +46,18 @@ public class AIConnector {
                 .header(content_type,json)
                 .post(requestBody)
                 .build();
-        String reponseBody = "Irgendwas ist schief gelaufen!";
+        String reponseMessage = "Irgendwas ist schief gelaufen!";
         Call call = this.httpClient.newCall(request);
         try {
             Response response = call.execute();
             if (response.code() == 200) {
-                reponseBody = response.body().string();
+                ResponseBody responseBody = response.body();
+                ResponseEntitity responseEntitity = this.objectMapper.readValue(responseBody.string(), ResponseEntitity.class);
+                reponseMessage = responseEntitity.getChoices()[0].getMessage().getContent();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return reponseBody;
+        return reponseMessage;
     }
 }
