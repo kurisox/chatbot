@@ -12,7 +12,7 @@ export default class ProgressBar {
     }
 
     printProgress(downloaded) {
-        this.#startTimer();
+        this.startTimer();
         this.downloaded += downloaded;
         if(this.downloadedBuffer + 10000000 < this.downloaded) {
             this.downloadedBuffer = this.downloaded;
@@ -24,7 +24,7 @@ export default class ProgressBar {
         }
     }
 
-    #startTimer(){
+    startTimer(){
         if(!this.dlStart) {
             this.dlStart = true;
             this.dlStartTime = Date.now();
