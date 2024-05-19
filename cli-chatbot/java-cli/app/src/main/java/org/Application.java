@@ -6,8 +6,19 @@ import org.chatcompletion.ChatCompletion;
 
 public class Application {
     public static void main(String[] args) {
+        ChatCompletion chatCompletion;
         Scanner scanner = new Scanner(System.in);
-        ChatCompletion chatCompletion = new ChatCompletion();
+        if (args.length > 0 && args.length < 3) {
+            int tokens = Integer.parseInt(args[0]);   
+            String aiPersona = "";     
+            if(args[1].equals("true") || args[1].equals("false")) {
+                System.out.println("Enter your persona: ");
+                aiPersona= scanner.nextLine();
+            }
+            chatCompletion = new ChatCompletion(tokens, aiPersona);
+        } else {
+            chatCompletion = new ChatCompletion();
+        }
         boolean loop = true;
         String question;
         String input;
