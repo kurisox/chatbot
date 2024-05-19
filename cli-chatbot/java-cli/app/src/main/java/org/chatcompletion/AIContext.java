@@ -37,11 +37,22 @@ public class AIContext {
         this.messages.add(new Message("system", this.aiPersona));
     }
 
+    /**
+     * Adds a message to the list of messages
+     *
+     * @param  message  the message to be added
+     * @return          true if the message successfully added, false otherwise
+     */
     public boolean addMessage(Message message) {
         this.messages.add(message);
         return this.messages.contains(message);
     }
 
+    /**
+     * Resets the content of the messages list and starts a new conversation.
+     *
+     * @return the size of the updated messages list
+     */
     public int resetContent() {
         this.messages.clear();
         if (this.aiPersona != null) {
@@ -52,6 +63,12 @@ public class AIContext {
         return this.messages.size();
     }
 
+    /**
+     * Resets the content of the AIContext and adds a new message with the summarized context.
+     *
+     * @param  summarizedContext  the summarized context to be added to the AIContext
+     * @return                    the size of the updated messages list
+     */
     public int resetContent(String summarizedContext) {
         this.messages.clear();
         if(this.aiPersona != null) {
