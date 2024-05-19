@@ -42,12 +42,23 @@ public class AIContext {
         return this.messages.contains(message);
     }
 
-    public void resetContent(String responseMessage) {
+    public int resetContent() {
+        this.messages.clear();
+        if (this.aiPersona != null) {
+            this.messages.add(new Message("system", this.aiPersona));
+        }else{
+            this.messages.add(new Message("system", "You are a helpful assistant."));
+        }
+        return this.messages.size();
+    }
+
+    public int resetContent(String summarizedContext) {
         this.messages.clear();
         if(this.aiPersona != null) {
-            this.messages.add(new Message("system", this.aiPersona + "\n" + responseMessage));
+            this.messages.add(new Message("system", this.aiPersona + "\n" + summarizedContext));
         }else{
-            this.messages.add(new Message("system", "You are a helpful assistant.\n" + responseMessage));
+            this.messages.add(new Message("system", "You are a helpful assistant.\n" + summarizedContext));
         }
+        return this.messages.size();
     }
 }
