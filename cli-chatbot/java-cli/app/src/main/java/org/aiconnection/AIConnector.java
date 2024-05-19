@@ -38,7 +38,7 @@ public class AIConnector {
         return instance;
     }
 
-    public String callAPI(String content) {
+    public ResponseEntitity callAPI(String content) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), content);
              
         Request request = new Request.Builder()
@@ -46,18 +46,18 @@ public class AIConnector {
                 .header(content_type,json)
                 .post(requestBody)
                 .build();
-        String reponseMessage = "Irgendwas ist schief gelaufen!";
         Call call = this.httpClient.newCall(request);
         try {
             Response response = call.execute();
             if (response.code() == 200) {
                 ResponseBody responseBody = response.body();
                 ResponseEntitity responseEntitity = this.objectMapper.readValue(responseBody.string(), ResponseEntitity.class);
-                reponseMessage = responseEntitity.getChoices()[0].getMessage().getContent();
+                return responseEntitity;
             }
         } catch (IOException e) {
+            System.out.println("Irgendwas ist schief gelaufen!");
             e.printStackTrace();
         }
-        return reponseMessage;
+        return null;
     }
 }
