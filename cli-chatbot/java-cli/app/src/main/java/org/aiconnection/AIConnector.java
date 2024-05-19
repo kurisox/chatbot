@@ -31,6 +31,11 @@ public class AIConnector {
                 .build();
     }
 
+    /**
+     * Returns the singleton instance of the AIConnector class. If the instance does not exist, it creates a new instance.
+     *
+     * @return the singleton instance of the AIConnector class
+     */
     public static AIConnector getInstance() {
         if (instance == null) {
             instance = new AIConnector();
@@ -38,6 +43,12 @@ public class AIConnector {
         return instance;
     }
 
+    /**
+     * Calls the API with the given content and returns the response entity.
+     *
+     * @param  content  the content to be sent to the API
+     * @return          the response entity received from the API, or null if an error occurred
+     */
     public ResponseEntitity callAPI(String content) {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), content);
              
