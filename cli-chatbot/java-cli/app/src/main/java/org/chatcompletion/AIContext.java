@@ -8,12 +8,7 @@ import org.ResponseEntitity.Message;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.Getter;
-import lombok.Setter;
 
-
-@Getter
-@Setter
 @JsonPropertyOrder({ "model", "max_tokens","messages"})
 public class AIContext {
     
