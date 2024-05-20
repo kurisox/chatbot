@@ -82,7 +82,7 @@ public class ChatCompletion {
    * @param  tokenOverflow  a flag indicating if the token overflow has occurred. if true, the tokens will be set to the completion tokens, else the tokens will be set to the total tokens
    */
   private void updateTokens(ResponseEntitity response, boolean tokenOverflow) {
-    this.tokens = tokenOverflow ? response.getUsage().getCompletionTokens() : response.getUsage().getTotalTokens();
+    this.tokens = tokenOverflow ? response.usage().completionTokens() : response.usage().totalTokens();
   }
 
   /**
@@ -92,10 +92,8 @@ public class ChatCompletion {
    * @return           the content of the first message in the response choices
    */
   private String getResponseMessage(ResponseEntitity response) {
-    return response.getChoices()[0].getMessage().getContent();
+    return response.choices()[0].message().content();
   }
-
-  
 
     /**
      * Adds a new message to the AI context with the role "system" and the provided content.
